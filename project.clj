@@ -3,4 +3,4 @@
   :dependencies
    [[org.clojure/clojure "1.2.0-beta1"]
     [org.clojure/clojure-contrib "1.2.0-beta1"]
-    [clj-json "0.3.0-SNAPSHOT"]])
+    [clj-json "0.2.0"]])
