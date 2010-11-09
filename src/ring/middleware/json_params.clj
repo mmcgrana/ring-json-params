@@ -4,7 +4,7 @@
 (defn- json-request?
   [req]
   (if-let [#^String type (:content-type req)]
-    (.startsWith type "application/json")))
+    (not (empty? (re-find #"^application/(vnd.+)?json" type)))))
 
 (defn wrap-json-params [handler]
   (fn [req]
