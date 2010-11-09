@@ -1,6 +1,5 @@
 (ns ring.middleware.json-params
-  (:require [clj-json.core :as json])
-  (:require [clojure.contrib.io :as io]))
+  (:require [clj-json.core :as json]))
 
 (defn- json-request?
   [req]
@@ -10,7 +9,7 @@
 (defn wrap-json-params [handler]
   (fn [req]
     (if-let [body (and (json-request? req) (:body req))]
-      (let [bstr (io/slurp* body)
+      (let [bstr (slurp body)
             json-params (json/parse-string bstr)
             req* (assoc req
                    :json-params json-params
