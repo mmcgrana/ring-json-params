@@ -26,3 +26,11 @@
         resp (json-echo req)]
     (is (= {"id" 3 "foo" "bar"} (:params resp)))
     (is (= {"foo" "bar"} (:json-params resp)))))
+
+(deftest augments-with-vnd-json-content-type
+  (let [req {:content-type "application/vnd.foobar+json; charset=UTF-8"
+             :body (stream "{\"foo\": \"bar\"}")
+             :params {"id" 3}}
+        resp (json-echo req)]
+    (is (= {"id" 3 "foo" "bar"} (:params resp)))
+    (is (= {"foo" "bar"} (:json-params resp)))))
