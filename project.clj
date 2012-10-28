@@ -4,5 +4,4 @@
    [
    	[org.clojure/clojure "1.4.0"]    
     [cheshire "4.0.3"]
-   ]
-   :aot [ring.middleware.json-params])
+   ])
