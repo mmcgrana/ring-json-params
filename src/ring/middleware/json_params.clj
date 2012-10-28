@@ -1,5 +1,5 @@
 (ns ring.middleware.json-params
-  (:require [clj-json.core :as json]))
+  (:require [cheshire.core :as json]))
 
 (defn- json-request?
   [req]
