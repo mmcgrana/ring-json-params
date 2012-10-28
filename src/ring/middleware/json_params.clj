@@ -1,5 +1,5 @@
 (ns ring.middleware.json-params
-  (:require [clj-json.core :as json]))
+  (:require [cheshire.core :as json2]))
 
 (defn- json-request?
   [req]
@@ -10,7 +10,7 @@
   (fn [req]
     (if-let [body (and (json-request? req) (:body req))]
       (let [bstr (slurp body)
-            json-params (json/parse-string bstr)
+            json-params (json2/parse-string bstr)
             req* (assoc req
                    :json-params json-params
                    :params (merge (:params req) json-params))]
