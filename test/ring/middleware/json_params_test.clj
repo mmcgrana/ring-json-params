@@ -34,3 +34,11 @@
         resp (json-echo req)]
     (is (= {"id" 3 :foo "bar"} (:params resp)))
     (is (= {:foo "bar"} (:json-params resp)))))
+
+(deftest handles-empty-body
+  (let [req {:content-type "application/json; charset=UTF-8"
+             :body (stream "")
+             :params {"id" 3}}
+        resp (json-echo req)]
+    (is (= {"id" 3} (:params resp)))
+    (is (= nil (:json-params resp)))))

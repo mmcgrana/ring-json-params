@@ -1,4 +1,4 @@
-(defproject ring-json-params "0.1.4"
+(defproject com.livingsocial/ring-json-params "0.1.5"
   :description "Ring middleware for JSON params parsing."
   :dependencies
    [[org.clojure/clojure "1.4.0"]
