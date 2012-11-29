@@ -1,5 +1,6 @@
 (ns ring.middleware.json-params
-  (:require [clojure.data.json :as json]))
+  (:require [clojure.data.json :as json])
+  (:use [clojure.string :only [blank?]]))
 
 (defn- json-request?
   [req]
@@ -10,8 +11,8 @@
   (fn [req]
     (if-let [body (and (json-request? req) (:body req))]
       (let [body-str (slurp body)]
-        (if-let [bstr (and (not (empty? body-str)) body-str)]
-          (let [json-params (json/read-json bstr)
+        (if-not (blank? body-str)
+          (let [json-params (json/read-json body-str)
                 req* (assoc req
                   :json-params json-params
                   :params (merge (:params req) json-params))]
