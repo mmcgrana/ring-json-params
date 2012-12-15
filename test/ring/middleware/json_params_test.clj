@@ -1,7 +1,7 @@
 (ns ring.middleware.json-params-test
   (:use clojure.test)
+  (:use clojure.java.io)
   (:use ring.middleware.json-params)
-  (:require [clojure.contrib.io :as io])
   (:import java.io.ByteArrayInputStream))
 
 (defn stream [s]
@@ -10,12 +10,22 @@
 (def json-echo
   (wrap-json-params identity))
 
+(defn ^String slurp*
+  [f]
+  (with-open [r (reader f)]
+      (let [sb (StringBuilder.)]
+        (loop [c (.read r)]
+          (if (neg? c)
+            (str sb)
+            (do (.append sb (char c))
+                (recur (.read r))))))))
+
 (deftest noop-with-other-content-type
   (let [req {:content-type "application/xml"
              :body (stream "<xml></xml>")
              :params {"id" 3}}
         resp (json-echo req)]
-    (is (= "<xml></xml>") (io/slurp* (:body resp)))
+    (is (= "<xml></xml>") (slurp* (:body resp)))
     (is (= {"id" 3} (:params resp)))
     (is (nil? (:json-params resp)))))
 
