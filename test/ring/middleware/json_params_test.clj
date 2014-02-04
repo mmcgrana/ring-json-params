@@ -1,7 +1,6 @@
 (ns ring.middleware.json-params-test
   (:use clojure.test)
   (:use ring.middleware.json-params)
-  (:require [clojure.contrib.io :as io])
   (:import java.io.ByteArrayInputStream))
 
 (defn stream [s]
@@ -15,7 +14,7 @@
              :body (stream "<xml></xml>")
              :params {"id" 3}}
         resp (json-echo req)]
-    (is (= "<xml></xml>") (io/slurp* (:body resp)))
+    (is (= "<xml></xml>") (slurp (:body resp)))
     (is (= {"id" 3} (:params resp)))
     (is (nil? (:json-params resp)))))
 
